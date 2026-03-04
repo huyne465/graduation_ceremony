@@ -13,8 +13,10 @@ class FooterSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Container(
-      color: Colors.black,
+      color: isDark ? AppColors.dmSurface : Colors.black,
       padding: EdgeInsets.symmetric(vertical: 48.h, horizontal: 24.w),
       child: Center(
         child: ConstrainedBox(

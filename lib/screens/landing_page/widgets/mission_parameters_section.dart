@@ -34,7 +34,9 @@ class MissionParametersSection extends StatelessWidget {
                     color: Colors.grey[400],
                   ),
                   Container(
-                    color: AppColors.backgroundDark,
+                    color: Theme.of(context).brightness == Brightness.dark
+                        ? AppColors.dmBackground
+                        : AppColors.backgroundDark,
                     padding: EdgeInsets.symmetric(horizontal: 24.w),
                     child: Text(
                       AppStrings.missionTitle.tr(),
@@ -243,7 +245,12 @@ class _TechListItem extends StatelessWidget {
         SizedBox(width: 8.w),
         Text(
           text,
-          style: AppTextStyle.getMonospace(fontSize: 12, color: Colors.black54),
+          style: AppTextStyle.getMonospace(
+            fontSize: 12,
+            color: Theme.of(context).brightness == Brightness.dark
+                ? AppColors.dmTextSecondary
+                : Colors.black54,
+          ),
         ),
       ],
     );
@@ -342,8 +349,14 @@ class _RowTime extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: const BoxDecoration(
-        border: Border(bottom: BorderSide(color: Colors.black12)),
+      decoration: BoxDecoration(
+        border: Border(
+          bottom: BorderSide(
+            color: Theme.of(context).brightness == Brightness.dark
+                ? AppColors.dmBorder
+                : Colors.black12,
+          ),
+        ),
       ),
       padding: EdgeInsets.symmetric(vertical: 8.h),
       child: Row(
@@ -353,7 +366,9 @@ class _RowTime extends StatelessWidget {
             label,
             style: AppTextStyle.getMonospace(
               fontSize: 14,
-              color: Colors.black54,
+              color: Theme.of(context).brightness == Brightness.dark
+                  ? AppColors.dmTextSecondary
+                  : Colors.black54,
             ),
           ),
           Text(
@@ -361,7 +376,11 @@ class _RowTime extends StatelessWidget {
             style: AppTextStyle.getMonospace(
               fontWeight: FontWeightManager.bold,
               fontSize: 14,
-              color: isHighlight ? AppColors.primary : Colors.black,
+              color: isHighlight
+                  ? AppColors.primary
+                  : (Theme.of(context).brightness == Brightness.dark
+                        ? AppColors.dmTextPrimary
+                        : Colors.black),
             ),
           ),
         ],

@@ -25,6 +25,22 @@ class _LandingPageState extends ConsumerState<LandingPage>
   late AnimationController _scanController;
   late Animation<double> _scanAnimation;
 
+  // Section keys for scroll targeting
+  final _briefingKey = GlobalKey();
+  final _intelKey = GlobalKey();
+  final _extractKey = GlobalKey();
+
+  void _scrollToSection(GlobalKey key) {
+    final ctx = key.currentContext;
+    if (ctx != null) {
+      Scrollable.ensureVisible(
+        ctx,
+        duration: const Duration(milliseconds: 600),
+        curve: Curves.easeInOutCubic,
+      );
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -49,7 +65,9 @@ class _LandingPageState extends ConsumerState<LandingPage>
     final isLoading = ref.watch(isLoadingProvider);
 
     return Scaffold(
-      backgroundColor: AppColors.backgroundDark, // slate-200 equivalent
+      backgroundColor: Theme.of(context).brightness == Brightness.dark
+          ? AppColors.dmBackground
+          : AppColors.backgroundDark,
       body: Stack(
         children: [
           // Radial overlay
@@ -108,7 +126,11 @@ class _LandingPageState extends ConsumerState<LandingPage>
 
           CustomScrollView(
             slivers: [
-              Header(),
+              Header(
+                onBriefingTap: () => _scrollToSection(_briefingKey),
+                onIntelTap: () => _scrollToSection(_intelKey),
+                onExtractTap: () => _scrollToSection(_extractKey),
+              ),
               SliverList(
                 delegate: SliverChildListDelegate([
                   Stack(
@@ -116,10 +138,13 @@ class _LandingPageState extends ConsumerState<LandingPage>
                       // Content is ALWAYS built – responds to locale changes
                       Column(
                         children: [
-                          HeroSection(),
+                          KeyedSubtree(key: _briefingKey, child: HeroSection()),
                           OperationDateSection(),
-                          MissionParametersSection(),
-                          RsvpSection(),
+                          KeyedSubtree(
+                            key: _intelKey,
+                            child: MissionParametersSection(),
+                          ),
+                          KeyedSubtree(key: _extractKey, child: RsvpSection()),
                           FooterSection(),
                         ],
                       ),
@@ -130,7 +155,10 @@ class _LandingPageState extends ConsumerState<LandingPage>
                           opacity: isLoading ? 1.0 : 0.0,
                           duration: const Duration(milliseconds: 300),
                           child: Shimmer.fromColors(
-                            baseColor: AppColors.backgroundDark,
+                            baseColor:
+                                Theme.of(context).brightness == Brightness.dark
+                                ? AppColors.dmBackground
+                                : AppColors.backgroundDark,
                             highlightColor: AppColors.primary.withValues(
                               alpha: 0.15,
                             ),
@@ -138,7 +166,11 @@ class _LandingPageState extends ConsumerState<LandingPage>
                             child: Container(
                               height: 2000.h,
                               width: double.infinity,
-                              color: AppColors.backgroundDark,
+                              color:
+                                  Theme.of(context).brightness ==
+                                      Brightness.dark
+                                  ? AppColors.dmBackground
+                                  : AppColors.backgroundDark,
                             ),
                           ),
                         ),

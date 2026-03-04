@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:graduation_ceremony/screens/landing_page/landing_page.dart';
 import 'package:graduation_ceremony/theme/app_theme.dart';
+import 'package:graduation_ceremony/providers/theme_provider.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 class CustomBinding extends WidgetsFlutterBinding {
@@ -42,11 +43,13 @@ class AppScrollBehavior extends MaterialScrollBehavior {
   };
 }
 
-class GraduationApp extends StatelessWidget {
+class GraduationApp extends ConsumerWidget {
   const GraduationApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final themeMode = ref.watch(themeModeProvider);
+
     return ScreenUtilInit(
       designSize: const Size(1440, 1024),
       minTextAdapt: true,
@@ -56,6 +59,8 @@ class GraduationApp extends StatelessWidget {
           title: 'Graduation Invitation 2025',
           debugShowCheckedModeBanner: false,
           theme: AppTheme.lightTheme,
+          darkTheme: AppTheme.darkTheme,
+          themeMode: themeMode,
           scrollBehavior: AppScrollBehavior(),
           localizationsDelegates: context.localizationDelegates,
           supportedLocales: context.supportedLocales,

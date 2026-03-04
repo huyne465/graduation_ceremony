@@ -16,14 +16,17 @@ class OperationDateSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     bool isMobile = MediaQuery.of(context).size.width < 768;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Container(
       width: double.infinity,
-      decoration: const BoxDecoration(
-        color: Colors.white,
+      decoration: BoxDecoration(
+        color: isDark ? AppColors.dmSurface : Colors.white,
         border: Border(
-          top: BorderSide(color: Colors.black12),
-          bottom: BorderSide(color: Colors.black12),
+          top: BorderSide(color: isDark ? AppColors.dmBorder : Colors.black12),
+          bottom: BorderSide(
+            color: isDark ? AppColors.dmBorder : Colors.black12,
+          ),
         ),
       ),
       padding: EdgeInsets.symmetric(vertical: 64.h, horizontal: 24.w),
@@ -87,7 +90,7 @@ class OperationDateSection extends StatelessWidget {
 
               // Right Block
               Container(
-                color: Colors.white,
+                color: isDark ? AppColors.dmSurface : Colors.white,
                 padding: EdgeInsets.all(16.w),
                 width: isMobile ? double.infinity : 400.w,
                 child: Column(

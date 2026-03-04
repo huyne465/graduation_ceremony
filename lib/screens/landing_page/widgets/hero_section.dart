@@ -56,10 +56,18 @@ class _HeroSectionState extends State<HeroSection>
               child: Container(
                 width: 96.w,
                 height: 96.h,
-                decoration: const BoxDecoration(
+                decoration: BoxDecoration(
                   border: Border(
-                    top: BorderSide(color: Colors.black12),
-                    left: BorderSide(color: Colors.black12),
+                    top: BorderSide(
+                      color: Theme.of(context).brightness == Brightness.dark
+                          ? AppColors.dmBorder
+                          : Colors.black12,
+                    ),
+                    left: BorderSide(
+                      color: Theme.of(context).brightness == Brightness.dark
+                          ? AppColors.dmBorder
+                          : Colors.black12,
+                    ),
                   ),
                 ),
                 child: Align(

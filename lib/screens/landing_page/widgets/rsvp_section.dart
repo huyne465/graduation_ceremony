@@ -13,6 +13,8 @@ class RsvpSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 96.h),
       child: Center(
@@ -21,10 +23,12 @@ class RsvpSection extends StatelessWidget {
           child: Container(
             // The black container
             decoration: BoxDecoration(
-              color: Colors.black,
+              color: isDark ? AppColors.dmSurface : Colors.black,
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black38,
+                  color: isDark
+                      ? AppColors.primary.withValues(alpha: 0.15)
+                      : Colors.black38,
                   blurRadius: 30.r,
                   offset: Offset(0, 15.h),
                 ),
