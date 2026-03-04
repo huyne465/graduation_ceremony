@@ -31,7 +31,9 @@ class MissionParametersSection extends StatelessWidget {
                   Container(
                     width: double.infinity,
                     height: 1.h,
-                    color: Colors.grey[400],
+                    color: Theme.of(context).brightness == Brightness.dark
+                        ? AppColors.dmBorder
+                        : Colors.grey[400],
                   ),
                   Container(
                     color: Theme.of(context).brightness == Brightness.dark
@@ -106,13 +108,17 @@ class _BaseTechCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return CyberHoverBuilder(
       enableBorder: true,
       glowColor: AppColors.primary,
       child: Container(
         decoration: BoxDecoration(
-          color: Colors.grey[100],
-          border: Border.all(color: Colors.grey[300]!),
+          color: isDark ? AppColors.dmSurface : Colors.grey[100],
+          border: Border.all(
+            color: isDark ? AppColors.dmBorder : Colors.grey[300]!,
+          ),
         ),
         padding: EdgeInsets.all(32.w),
         child: Stack(

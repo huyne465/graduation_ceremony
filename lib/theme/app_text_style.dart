@@ -10,52 +10,55 @@ class FontWeightManager {
 }
 
 class AppTextStyle {
-  static TextStyle getDisplayLarge({Color color = Colors.black}) => TextStyle(
+  /// Nếu [color] == null → không set color → text sẽ kế thừa từ DefaultTextStyle / Theme.
+  /// Điều này giúp dark mode hoạt động tự động.
+
+  static TextStyle getDisplayLarge({Color? color}) => TextStyle(
     fontSize: 48.sp,
     fontWeight: FontWeightManager.bold,
     color: color,
     letterSpacing: -1.0,
   );
 
-  static TextStyle getDisplayMedium({Color color = Colors.black}) => TextStyle(
+  static TextStyle getDisplayMedium({Color? color}) => TextStyle(
     fontSize: 36.sp,
     fontWeight: FontWeightManager.bold,
     color: color,
     letterSpacing: -0.5,
   );
 
-  static TextStyle getHeadlineLarge({Color color = Colors.black}) => TextStyle(
+  static TextStyle getHeadlineLarge({Color? color}) => TextStyle(
     fontSize: 32.sp,
     fontWeight: FontWeightManager.bold,
     color: color,
   );
 
-  static TextStyle getHeadlineMedium({Color color = Colors.black}) => TextStyle(
+  static TextStyle getHeadlineMedium({Color? color}) => TextStyle(
     fontSize: 28.sp,
     fontWeight: FontWeightManager.bold,
     color: color,
   );
 
-  static TextStyle getTitleLarge({Color color = Colors.black}) => TextStyle(
+  static TextStyle getTitleLarge({Color? color}) => TextStyle(
     fontSize: 22.sp,
     fontWeight: FontWeightManager.medium,
     color: color,
   );
 
-  static TextStyle getBodyLarge({Color color = Colors.black}) => TextStyle(
+  static TextStyle getBodyLarge({Color? color}) => TextStyle(
     fontSize: 16.sp,
     fontWeight: FontWeightManager.regular,
     color: color,
   );
 
-  static TextStyle getBodyMedium({Color color = Colors.black}) => TextStyle(
+  static TextStyle getBodyMedium({Color? color}) => TextStyle(
     fontSize: 14.sp,
     fontWeight: FontWeightManager.regular,
     color: color,
   );
 
   static TextStyle getMonospace({
-    Color color = Colors.black,
+    Color? color,
     double fontSize = 12.0,
     FontWeight fontWeight = FontWeightManager.regular,
     double letterSpacing = 0.0,
