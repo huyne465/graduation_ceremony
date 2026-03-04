@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:graduation_ceremony/theme/app_colors.dart';
 import 'package:graduation_ceremony/theme/app_text_style.dart';
 
@@ -59,14 +60,9 @@ class Header extends StatelessWidget {
               Container(
                 width: 128.w,
                 height: 24.h,
-                decoration: const BoxDecoration(
-                  image: DecorationImage(
-                    image: NetworkImage(
-                      'https://upload.wikimedia.org/wikipedia/commons/e/e9/UPC-A-036000291452.svg',
-                    ),
-                    fit: BoxFit.fill,
-                    opacity: 0.5,
-                  ),
+                child: SvgPicture.asset(
+                  'assets/svg/p_code.svg',
+                  width: 100.w, // Có thể chỉnh kích thước
                 ),
               ),
               SizedBox(width: 16.w),
@@ -82,21 +78,55 @@ class Header extends StatelessWidget {
   }
 }
 
-class _NavText extends StatelessWidget {
+class _NavText extends StatefulWidget {
   final String text;
   const _NavText(this.text);
 
   @override
+  State<_NavText> createState() => _NavTextState();
+}
+
+class _NavTextState extends State<_NavText> {
+  bool _isHovered = false;
+
+  @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 16.w),
-      child: Text(
-        text,
-        style: AppTextStyle.getMonospace(
-          color: Colors.black54,
-          fontSize: 12,
-          fontWeight: FontWeightManager.bold,
-          letterSpacing: 2.0,
+    return MouseRegion(
+      onEnter: (_) => setState(() => _isHovered = true),
+      onExit: (_) => setState(() => _isHovered = false),
+      cursor: SystemMouseCursors.click,
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 16.w),
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 200),
+          decoration: BoxDecoration(
+            border: Border(
+              bottom: BorderSide(
+                color: _isHovered ? AppColors.primary : Colors.transparent,
+                width: 2.h,
+              ),
+            ),
+          ),
+          padding: EdgeInsets.only(bottom: 4.h),
+          child: Text(
+            widget.text,
+            style:
+                AppTextStyle.getMonospace(
+                  color: _isHovered ? AppColors.primary : Colors.black54,
+                  fontSize: 12,
+                  fontWeight: FontWeightManager.bold,
+                  letterSpacing: 2.0,
+                ).copyWith(
+                  shadows: _isHovered
+                      ? [
+                          BoxShadow(
+                            color: AppColors.primary.withValues(alpha: 0.5),
+                            blurRadius: 8.r,
+                          ),
+                        ]
+                      : null,
+                ),
+          ),
         ),
       ),
     );

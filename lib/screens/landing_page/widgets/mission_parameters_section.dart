@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:graduation_ceremony/theme/app_colors.dart';
 import 'package:graduation_ceremony/theme/app_text_style.dart';
+import 'package:graduation_ceremony/screens/landing_page/widgets/cyber_hover_builder.dart';
 
 // ======================================
 // 4. Mission Parameters
@@ -101,74 +102,78 @@ class _BaseTechCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.grey[100],
-        border: Border.all(color: Colors.grey[300]!),
-      ),
-      padding: EdgeInsets.all(32.w),
-      child: Stack(
-        clipBehavior: Clip.none,
-        children: [
-          // Corner decorators
-          Positioned(
-            top: -32.h,
-            left: -32.w,
-            child: const _Corner(Alignment.topLeft),
-          ),
-          Positioned(
-            bottom: -32.h,
-            right: -32.w,
-            child: const _Corner(Alignment.bottomRight),
-          ),
+    return CyberHoverBuilder(
+      enableBorder: true,
+      glowColor: AppColors.primary,
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.grey[100],
+          border: Border.all(color: Colors.grey[300]!),
+        ),
+        padding: EdgeInsets.all(32.w),
+        child: Stack(
+          clipBehavior: Clip.none,
+          children: [
+            // Corner decorators
+            Positioned(
+              top: -32.h,
+              left: -32.w,
+              child: const _Corner(Alignment.topLeft),
+            ),
+            Positioned(
+              bottom: -32.h,
+              right: -32.w,
+              child: const _Corner(Alignment.bottomRight),
+            ),
 
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Align(
-                alignment: Alignment.topRight,
-                child: SizedBox(
-                  width: 48.w,
-                  height: 48.h,
-                  child: Stack(
-                    alignment: Alignment.center,
-                    children: [
-                      Transform.rotate(
-                        angle: 45 * pi / 180,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            border: Border.all(color: AppColors.primary),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Align(
+                  alignment: Alignment.topRight,
+                  child: SizedBox(
+                    width: 48.w,
+                    height: 48.h,
+                    child: Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        Transform.rotate(
+                          angle: 45 * pi / 180,
+                          child: Container(
+                            decoration: BoxDecoration(
+                              border: Border.all(color: AppColors.primary),
+                            ),
                           ),
                         ),
-                      ),
-                      Icon(iconData, color: AppColors.primary, size: 24.sp),
-                    ],
+                        Icon(iconData, color: AppColors.primary, size: 24.sp),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-              Text(
-                title,
-                style: AppTextStyle.getTitleLarge().copyWith(
-                  fontWeight: FontWeightManager.bold,
+                Text(
+                  title,
+                  style: AppTextStyle.getTitleLarge().copyWith(
+                    fontWeight: FontWeightManager.bold,
+                  ),
+                ),
+                SizedBox(height: 16.h),
+                content,
+              ],
+            ),
+
+            Positioned(
+              bottom: -16.h,
+              right: -16.w,
+              child: Text(
+                secCode,
+                style: AppTextStyle.getMonospace(
+                  color: Colors.grey,
+                  fontSize: 10,
                 ),
               ),
-              SizedBox(height: 16.h),
-              content,
-            ],
-          ),
-
-          Positioned(
-            bottom: -16.h,
-            right: -16.w,
-            child: Text(
-              secCode,
-              style: AppTextStyle.getMonospace(
-                color: Colors.grey,
-                fontSize: 10,
-              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

@@ -17,7 +17,7 @@ class CustomBinding extends WidgetsFlutterBinding {
 }
 
 void main() {
-  CustomBinding();
+  // CustomBinding();
   runApp(const GraduationApp());
 }
 

@@ -63,31 +63,86 @@ class RsvpSection extends StatelessWidget {
                         SizedBox(height: 40.h),
 
                         // Tech Button
-                        ElevatedButton.icon(
+                        ElevatedButton(
                           onPressed: () {},
-                          icon: Icon(
-                            Icons.fingerprint,
-                            color: Colors.white,
-                            size: 24.sp,
-                          ),
-                          label: Text(
-                            'INITIATE RSVP',
-                            style: AppTextStyle.getMonospace(
-                              color: Colors.white,
-                              fontWeight: FontWeightManager.bold,
-                              letterSpacing: 2,
+                          style: ButtonStyle(
+                            backgroundColor:
+                                WidgetStateProperty.resolveWith<Color>((
+                                  Set<WidgetState> states,
+                                ) {
+                                  if (states.contains(WidgetState.hovered)) {
+                                    return AppColors.neonBlue.withValues(
+                                      alpha: 0.2,
+                                    ); // Hover glow background
+                                  }
+                                  return AppColors.primary; // Default Red
+                                }),
+                            elevation: WidgetStateProperty.resolveWith<double>((
+                              Set<WidgetState> states,
+                            ) {
+                              if (states.contains(WidgetState.hovered)) {
+                                return 15.0; // Raise on hover
+                              }
+                              return 0.0;
+                            }),
+                            shadowColor: WidgetStateProperty.resolveWith<Color>(
+                              (Set<WidgetState> states) {
+                                if (states.contains(WidgetState.hovered)) {
+                                  return AppColors.neonBlue;
+                                }
+                                return Colors.transparent;
+                              },
+                            ),
+                            shape:
+                                WidgetStateProperty.resolveWith<OutlinedBorder>(
+                                  (Set<WidgetState> states) {
+                                    if (states.contains(WidgetState.hovered)) {
+                                      return RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.zero,
+                                        side: BorderSide(
+                                          color: AppColors.neonBlue,
+                                          width: 2.w,
+                                        ),
+                                      );
+                                    }
+                                    return const RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.zero,
+                                      side: BorderSide.none,
+                                    );
+                                  },
+                                ),
+                            padding: WidgetStateProperty.all(
+                              EdgeInsets.symmetric(
+                                horizontal: 40.w,
+                                vertical: 24.h,
+                              ),
                             ),
                           ),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: AppColors.primary,
-                            shape: const RoundedRectangleBorder(
-                              borderRadius: BorderRadius.zero,
-                            ),
-                            padding: EdgeInsets.symmetric(
-                              horizontal: 40.w,
-                              vertical: 24.h,
-                            ),
-                          ).copyWith(elevation: WidgetStateProperty.all(0)),
+                          child: Builder(
+                            builder: (context) {
+                              // Builder gives us context below the button to get states if needed
+                              // But for simple internal changes, we can just use the button style
+                              return Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Icon(
+                                    Icons.fingerprint,
+                                    color: Colors.white,
+                                    size: 24.sp,
+                                  ),
+                                  SizedBox(width: 12.w),
+                                  Text(
+                                    'INITIATE RSVP',
+                                    style: AppTextStyle.getMonospace(
+                                      color: Colors.white,
+                                      fontWeight: FontWeightManager.bold,
+                                      letterSpacing: 2,
+                                    ),
+                                  ),
+                                ],
+                              );
+                            },
+                          ),
                         ),
                       ],
                     ),

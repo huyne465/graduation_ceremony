@@ -13,4 +13,8 @@ class AppColors {
   static const Color surfaceLight = Color(0xFFFFFFFF);
 
   static const Color textMain = Color(0xFF0F172A);
+
+  // Cyberpunk Hover Colors
+  static const Color neonBlue = Color(0xFF00F0FF);
+  static const Color neonRed = Color(0xFFFF003C);
 }
