@@ -5,6 +5,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:graduation_ceremony/theme/app_colors.dart';
 import 'package:graduation_ceremony/theme/app_text_style.dart';
 import 'package:graduation_ceremony/screens/landing_page/widgets/cyber_hover_builder.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:graduation_ceremony/theme/app_strings.dart';
 
 // ======================================
 // 4. Mission Parameters
@@ -35,7 +37,7 @@ class MissionParametersSection extends StatelessWidget {
                     color: AppColors.backgroundDark,
                     padding: EdgeInsets.symmetric(horizontal: 24.w),
                     child: Text(
-                      'MISSION PARAMETERS',
+                      AppStrings.missionTitle.tr(),
                       style: AppTextStyle.getHeadlineMedium().copyWith(
                         fontWeight: FontWeightManager.bold,
                       ),
@@ -44,7 +46,7 @@ class MissionParametersSection extends StatelessWidget {
                   Positioned(
                     bottom: -20.h,
                     child: Text(
-                      'DECRYPTING...',
+                      AppStrings.missionDecrypting.tr(),
                       style: AppTextStyle.getMonospace(
                         color: AppColors.primary,
                         fontSize: 10,
@@ -212,17 +214,17 @@ class _AttireCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _BaseTechCard(
-      title: 'ATTIRE PROTOCOL',
+      title: AppStrings.missionAttireTitle.tr(),
       iconData: Icons.style,
       secCode: 'SEC-01',
       content: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const _TechListItem('FORMAL SUIT / GOWN'),
+          _TechListItem(AppStrings.missionAttire1.tr()),
           SizedBox(height: 12.h),
-          const _TechListItem('REGALIA MANDATORY'),
+          _TechListItem(AppStrings.missionAttire2.tr()),
           SizedBox(height: 12.h),
-          const _TechListItem('TACTICAL ELEGANCE'),
+          _TechListItem(AppStrings.missionAttire3.tr()),
         ],
       ),
     );
@@ -252,7 +254,7 @@ class _LocationCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _BaseTechCard(
-      title: 'EXTRACTION POINT',
+      title: AppStrings.missionExtractionTitle.tr(),
       iconData: Icons.pin_drop,
       secCode: 'SEC-02',
       content: Column(
@@ -299,7 +301,7 @@ class _LocationCard extends StatelessWidget {
           ),
           SizedBox(height: 16.h),
           Text(
-            'Grand Convention Center\nSector 7, Main Hall',
+            AppStrings.missionExtractionDesc.tr(),
             style: AppTextStyle.getMonospace(fontSize: 14),
           ),
         ],
@@ -311,15 +313,19 @@ class _LocationCard extends StatelessWidget {
 class _TimelineCardTech extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return const _BaseTechCard(
-      title: 'TIMELINE',
+    return _BaseTechCard(
+      title: AppStrings.missionTimelineTitle.tr(),
       iconData: Icons.schedule,
       secCode: 'SEC-03',
       content: Column(
         children: [
-          _RowTime('INFILTRATION', '17:00'),
-          _RowTime('CEREMONY', '18:30', isHighlight: true),
-          _RowTime('DEBRIEF', '20:30'),
+          _RowTime(AppStrings.missionTimelineInfiltration.tr(), '17:00'),
+          _RowTime(
+            AppStrings.missionTimelineCeremony.tr(),
+            '18:30',
+            isHighlight: true,
+          ),
+          _RowTime(AppStrings.missionTimelineDebrief.tr(), '20:30'),
         ],
       ),
     );

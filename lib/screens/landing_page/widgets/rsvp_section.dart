@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:graduation_ceremony/theme/app_colors.dart';
 import 'package:graduation_ceremony/theme/app_text_style.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:graduation_ceremony/theme/app_strings.dart';
 
 // ======================================
 // 5. RSVP Section
@@ -45,7 +47,7 @@ class RsvpSection extends StatelessWidget {
                     child: Column(
                       children: [
                         Text(
-                          'CONFIRM ATTENDANCE',
+                          AppStrings.rsvpTitle.tr(),
                           textAlign: TextAlign.center,
                           style: AppTextStyle.getDisplayLarge(
                             color: Colors.white,
@@ -53,7 +55,7 @@ class RsvpSection extends StatelessWidget {
                         ),
                         SizedBox(height: 8.h),
                         Text(
-                          'RESPONSE REQUIRED. DEADLINE IMMINENT.',
+                          AppStrings.rsvpSubtitle.tr(),
                           style: AppTextStyle.getMonospace(
                             color: Colors.grey,
                             fontSize: 14,
@@ -132,7 +134,7 @@ class RsvpSection extends StatelessWidget {
                                   ),
                                   SizedBox(width: 12.w),
                                   Text(
-                                    'INITIATE RSVP',
+                                    AppStrings.rsvpButton.tr(),
                                     style: AppTextStyle.getMonospace(
                                       color: Colors.white,
                                       fontWeight: FontWeightManager.bold,

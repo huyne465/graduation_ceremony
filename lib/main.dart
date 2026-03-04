@@ -1,8 +1,10 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:graduation_ceremony/screens/landing_page/landing_page.dart';
 import 'package:graduation_ceremony/theme/app_theme.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class CustomBinding extends WidgetsFlutterBinding {
   @override
@@ -16,9 +18,19 @@ class CustomBinding extends WidgetsFlutterBinding {
   }
 }
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await EasyLocalization.ensureInitialized();
+
   // CustomBinding();
-  runApp(const GraduationApp());
+  runApp(
+    EasyLocalization(
+      supportedLocales: const [Locale('en'), Locale('vi')],
+      path: 'assets/translations', // fallbackFile is not mandatory
+      fallbackLocale: const Locale('en'),
+      child: const ProviderScope(child: GraduationApp()),
+    ),
+  );
 }
 
 class AppScrollBehavior extends MaterialScrollBehavior {
@@ -45,6 +57,9 @@ class GraduationApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           theme: AppTheme.lightTheme,
           scrollBehavior: AppScrollBehavior(),
+          localizationsDelegates: context.localizationDelegates,
+          supportedLocales: context.supportedLocales,
+          locale: context.locale,
           home: child,
         );
       },

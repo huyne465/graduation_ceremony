@@ -1,0 +1,52 @@
+{
+  "header": {
+    "target": "TARGET: ",
+    "graduation": "GRADUATION",
+    "nav_briefing": "BRIEFING",
+    "nav_intel": "INTEL",
+    "nav_extract": "EXTRACT"
+  },
+  "hero": {
+    "title1": "OPERATION:",
+    "title2": "COMMENCEMENT",
+    "subtitle": "SECURE PROTOCOL ENGAGED.\nAUTHORIZATION GRANTED FOR ATTENDANCE.",
+    "agent_label": "AGENT",
+    "agent_name": "JOHN DOE",
+    "status_label": "CLEARANCE",
+    "status_value": "LEVEL 7 APPROVED"
+  },
+  "operation_date": {
+    "title": "OPERATION DATE",
+    "decrypting": "DECRYPTING...",
+    "month_label": "MONTH",
+    "month_value": "FEBRUARY",
+    "day_label": "DAY",
+    "day_value": "24",
+    "year_label": "YEAR",
+    "year_value": "2025"
+  },
+  "mission_parameters": {
+    "title": "MISSION PARAMETERS",
+    "decrypting": "DECRYPTING...",
+    "attire_title": "ATTIRE PROTOCOL",
+    "attire_1": "FORMAL SUIT / GOWN",
+    "attire_2": "REGALIA MANDATORY",
+    "attire_3": "TACTICAL ELEGANCE",
+    "extraction_title": "EXTRACTION POINT",
+    "extraction_desc": "Grand Convention Center\nSector 7, Main Hall",
+    "timeline_title": "TIMELINE",
+    "timeline_infiltration": "INFILTRATION",
+    "timeline_ceremony": "CEREMONY",
+    "timeline_debrief": "DEBRIEF"
+  },
+  "rsvp": {
+    "title": "CONFIRM ATTENDANCE",
+    "subtitle": "RESPONSE REQUIRED. DEADLINE IMMINENT.",
+    "button": "INITIATE RSVP"
+  },
+  "footer": {
+    "system_active": "SYSTEM ACTIVE",
+    "secured": "SECURED",
+    "transmission_end": "END OF TRANSMISSION."
+  }
+}

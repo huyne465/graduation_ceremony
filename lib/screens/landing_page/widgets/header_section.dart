@@ -3,6 +3,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:graduation_ceremony/theme/app_colors.dart';
 import 'package:graduation_ceremony/theme/app_text_style.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:graduation_ceremony/theme/app_strings.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:graduation_ceremony/providers/app_state_provider.dart';
 
 // ======================================
 // 1. Header (Sticky)
@@ -38,9 +42,9 @@ class Header extends StatelessWidget {
                 letterSpacing: -0.5,
               ),
               children: [
-                const TextSpan(text: 'TARGET: '),
+                TextSpan(text: AppStrings.target.tr()),
                 TextSpan(
-                  text: 'GRADUATION',
+                  text: AppStrings.graduation.tr(),
                   style: const TextStyle(color: AppColors.primary),
                 ),
               ],
@@ -52,9 +56,11 @@ class Header extends StatelessWidget {
         if (MediaQuery.of(context).size.width > 768)
           Row(
             children: [
-              const _NavText('BRIEFING'),
-              const _NavText('INTEL'),
-              const _NavText('EXTRACT'),
+              _NavText(AppStrings.navBriefing.tr()),
+              _NavText(AppStrings.navIntel.tr()),
+              _NavText(AppStrings.navExtract.tr()),
+              SizedBox(width: 24.w),
+              const _LanguageToggle(),
               SizedBox(width: 24.w),
               // Dummy barcode
               Container(
@@ -128,6 +134,116 @@ class _NavTextState extends State<_NavText> {
                 ),
           ),
         ),
+      ),
+    );
+  }
+}
+
+class _LanguageToggle extends ConsumerStatefulWidget {
+  const _LanguageToggle();
+
+  @override
+  ConsumerState<_LanguageToggle> createState() => _LanguageToggleState();
+}
+
+class _LanguageToggleState extends ConsumerState<_LanguageToggle> {
+  bool _isHovered = false;
+
+  Future<void> _switchLanguage(Locale locale) async {
+    // Prevent clicking if already loading
+    if (ref.read(isLoadingProvider)) return;
+
+    // 1. Show shimmer overlay
+    ref.read(isLoadingProvider.notifier).setLoading(true);
+
+    // 2. Small delay to let shimmer render visibly
+    await Future.delayed(const Duration(milliseconds: 200));
+
+    // 3. Switch locale (synchronous, triggers rebuild)
+    if (mounted) {
+      context.setLocale(locale);
+    }
+
+    // 4. Wait for the frame to finish rebuilding with new locale
+    await Future.delayed(const Duration(milliseconds: 1000));
+
+    // 5. Hide shimmer – content underneath already has new translations
+    if (mounted) {
+      ref.read(isLoadingProvider.notifier).setLoading(false);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final currentLocale = context.locale.languageCode;
+
+    return MouseRegion(
+      onEnter: (_) => setState(() => _isHovered = true),
+      onExit: (_) => setState(() => _isHovered = false),
+      cursor: SystemMouseCursors.click,
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 200),
+        padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
+        decoration: BoxDecoration(
+          border: Border.all(
+            color: _isHovered ? AppColors.primary : Colors.transparent,
+            width: 1.w,
+          ),
+          color: _isHovered
+              ? AppColors.primary.withValues(alpha: 0.1)
+              : Colors.transparent,
+        ),
+        child: _isHovered
+            ? Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  GestureDetector(
+                    onTap: () => _switchLanguage(const Locale('en')),
+                    child: Text(
+                      'EN',
+                      style: AppTextStyle.getMonospace(
+                        color: currentLocale == 'en'
+                            ? AppColors.primary
+                            : Colors.grey,
+                        fontWeight: currentLocale == 'en'
+                            ? FontWeightManager.bold
+                            : FontWeightManager.regular,
+                        fontSize: 14,
+                      ),
+                    ),
+                  ),
+                  Text(
+                    ' | ',
+                    style: AppTextStyle.getMonospace(
+                      color: Colors.grey,
+                      fontSize: 14,
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () => _switchLanguage(const Locale('vi')),
+                    child: Text(
+                      'VN',
+                      style: AppTextStyle.getMonospace(
+                        color: currentLocale == 'vi'
+                            ? AppColors.primary
+                            : Colors.grey,
+                        fontWeight: currentLocale == 'vi'
+                            ? FontWeightManager.bold
+                            : FontWeightManager.regular,
+                        fontSize: 14,
+                      ),
+                    ),
+                  ),
+                ],
+              )
+            : Text(
+                '[ ${currentLocale == 'vi' ? 'VN' : 'EN'} ]',
+                style: AppTextStyle.getMonospace(
+                  color: AppColors.primary,
+                  fontWeight: FontWeightManager.bold,
+                  fontSize: 14,
+                ),
+              ),
       ),
     );
   }

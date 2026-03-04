@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:graduation_ceremony/theme/app_colors.dart';
 import 'package:graduation_ceremony/theme/app_text_style.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:graduation_ceremony/theme/app_strings.dart';
 
 // ======================================
 // 2. Hero Section
@@ -86,7 +88,7 @@ class _HeroSectionState extends State<HeroSection>
                       : CrossAxisAlignment.end,
                   children: [
                     Text(
-                      'GRADUATION\n2025',
+                      '${AppStrings.heroTitle1.tr()}\n${AppStrings.heroTitle2.tr()}',
                       textAlign: isMobile ? TextAlign.center : TextAlign.right,
                       style: AppTextStyle.getDisplayLarge().copyWith(
                         fontSize: isMobile ? 60.sp : 120.sp,
@@ -107,7 +109,7 @@ class _HeroSectionState extends State<HeroSection>
                         ),
                         SizedBox(height: 8.h),
                         Text(
-                          'STATUS: CONFIRMED\nAGENT: CLASS OF \'25',
+                          '${AppStrings.heroStatusLabel.tr()}: ${AppStrings.heroStatusValue.tr()}\n${AppStrings.heroAgentLabel.tr()}: ${AppStrings.heroAgentName.tr()}',
                           textAlign: isMobile
                               ? TextAlign.center
                               : TextAlign.right,

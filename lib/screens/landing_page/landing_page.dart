@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:graduation_ceremony/theme/app_colors.dart';
 import 'package:graduation_ceremony/theme/app_text_style.dart';
+import 'package:graduation_ceremony/providers/app_state_provider.dart';
 
 import 'widgets/footer_section.dart';
 import 'widgets/header_section.dart';
@@ -10,14 +13,14 @@ import 'widgets/mission_parameters_section.dart';
 import 'widgets/operation_date_section.dart';
 import 'widgets/rsvp_section.dart';
 
-class LandingPage extends StatefulWidget {
+class LandingPage extends ConsumerStatefulWidget {
   const LandingPage({super.key});
 
   @override
-  State<LandingPage> createState() => _LandingPageState();
+  ConsumerState<LandingPage> createState() => _LandingPageState();
 }
 
-class _LandingPageState extends State<LandingPage>
+class _LandingPageState extends ConsumerState<LandingPage>
     with SingleTickerProviderStateMixin {
   late AnimationController _scanController;
   late Animation<double> _scanAnimation;
@@ -43,6 +46,8 @@ class _LandingPageState extends State<LandingPage>
 
   @override
   Widget build(BuildContext context) {
+    final isLoading = ref.watch(isLoadingProvider);
+
     return Scaffold(
       backgroundColor: AppColors.backgroundDark, // slate-200 equivalent
       body: Stack(
@@ -103,14 +108,43 @@ class _LandingPageState extends State<LandingPage>
 
           CustomScrollView(
             slivers: [
-              const Header(),
+              Header(),
               SliverList(
                 delegate: SliverChildListDelegate([
-                  const HeroSection(),
-                  const OperationDateSection(),
-                  const MissionParametersSection(),
-                  const RsvpSection(),
-                  const FooterSection(),
+                  Stack(
+                    children: [
+                      // Content is ALWAYS built – responds to locale changes
+                      Column(
+                        children: [
+                          HeroSection(),
+                          OperationDateSection(),
+                          MissionParametersSection(),
+                          RsvpSection(),
+                          FooterSection(),
+                        ],
+                      ),
+                      // Shimmer overlay fades in/out on top
+                      IgnorePointer(
+                        ignoring: !isLoading,
+                        child: AnimatedOpacity(
+                          opacity: isLoading ? 1.0 : 0.0,
+                          duration: const Duration(milliseconds: 300),
+                          child: Shimmer.fromColors(
+                            baseColor: AppColors.backgroundDark,
+                            highlightColor: AppColors.primary.withValues(
+                              alpha: 0.15,
+                            ),
+                            period: const Duration(milliseconds: 1200),
+                            child: Container(
+                              height: 2000.h,
+                              width: double.infinity,
+                              color: AppColors.backgroundDark,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ]),
               ),
             ],

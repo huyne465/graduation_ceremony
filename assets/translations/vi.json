@@ -1,0 +1,52 @@
+{
+  "header": {
+    "target": "MỤC TIÊU: ",
+    "graduation": "TỐT NGHIỆP",
+    "nav_briefing": "CHỈ THỊ",
+    "nav_intel": "THÔNG TIN",
+    "nav_extract": "RÚT LUI"
+  },
+  "hero": {
+    "title1": "CHIẾN DỊCH:",
+    "title2": "KHỞI HÀNH",
+    "subtitle": "GIAO THỨC BẢO MẬT KÍCH HOẠT.\nCẤP QUYỀN THAM DỰ.",
+    "agent_label": "ĐẶC VỤ",
+    "agent_name": "JOHN DOE",
+    "status_label": "MỨC ĐỘ",
+    "status_value": "CHẤP THUẬN CẤP 7"
+  },
+  "operation_date": {
+    "title": "NGÀY THỰC THI",
+    "decrypting": "ĐANG GIẢI MÃ...",
+    "month_label": "THÁNG",
+    "month_value": "HAI",
+    "day_label": "NGÀY",
+    "day_value": "24",
+    "year_label": "NĂM",
+    "year_value": "2025"
+  },
+  "mission_parameters": {
+    "title": "THÔNG SỐ NHIỆM VỤ",
+    "decrypting": "ĐANG GIẢI MÃ...",
+    "attire_title": "QUY ĐỊNH TRANG PHỤC",
+    "attire_1": "ÂU PHỤC / DẠ HỘI",
+    "attire_2": "BẮT BUỘC MẶC LỄ PHỤC",
+    "attire_3": "SANG TRỌNG / CHIẾN THUẬT",
+    "extraction_title": "ĐIỂM RÚT LUI",
+    "extraction_desc": "Trung Tâm Hội Nghị Grand\nKhu Vực 7, Sảnh Chính",
+    "timeline_title": "DÒNG THỜI GIAN",
+    "timeline_infiltration": "XÂM NHẬP",
+    "timeline_ceremony": "BUỔI LỄ",
+    "timeline_debrief": "BÁO CÁO"
+  },
+  "rsvp": {
+    "title": "XÁC NHẬN THAM DỰ",
+    "subtitle": "YÊU CẦU PHẢN HỒI. SẮP HẾT HẠN.",
+    "button": "KHỞI ĐỘNG CÁP"
+  },
+  "footer": {
+    "system_active": "HỆ THỐNG HOẠT ĐỘNG",
+    "secured": "ĐÃ BẢO MẬT",
+    "transmission_end": "KẾT THÚC TRUYỀN TẢI."
+  }
+}

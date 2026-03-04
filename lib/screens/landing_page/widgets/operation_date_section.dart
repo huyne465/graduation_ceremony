@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:graduation_ceremony/theme/app_colors.dart';
 import 'package:graduation_ceremony/theme/app_text_style.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:graduation_ceremony/theme/app_strings.dart';
 
 // ======================================
 // 3. Operation Section
@@ -38,7 +40,7 @@ class OperationDateSection extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    '[ OPERATION DATE ]',
+                    '[ ${AppStrings.operationDateTitle.tr()} ]',
                     style: AppTextStyle.getMonospace(
                       color: Colors.grey,
                       fontSize: 12,
@@ -46,7 +48,7 @@ class OperationDateSection extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    'APRIL 3RD',
+                    '${AppStrings.operationDateMonthValue.tr()} ${AppStrings.operationDateDayValue.tr()}RD',
                     style: AppTextStyle.getDisplayMedium().copyWith(
                       fontSize: 60.sp,
                       letterSpacing: -1,
@@ -61,7 +63,7 @@ class OperationDateSection extends StatelessWidget {
                       ),
                     ),
                     child: Text(
-                      '1700 HOURS',
+                      '1700 HOURS', // Will keep this as hardcoded for now, or you can add to localization if needed
                       style: AppTextStyle.getMonospace(
                         fontSize: 18,
                         fontWeight: FontWeightManager.bold,
