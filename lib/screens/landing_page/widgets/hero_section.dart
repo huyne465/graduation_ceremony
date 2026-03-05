@@ -1,11 +1,8 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:video_player/video_player.dart';
 import 'package:graduation_ceremony/theme/app_colors.dart';
 import 'package:graduation_ceremony/theme/app_text_style.dart';
-import 'package:easy_localization/easy_localization.dart';
-import 'package:graduation_ceremony/theme/app_strings.dart';
 
 // ======================================
 // 2. Hero Section
@@ -19,216 +16,180 @@ class HeroSection extends StatefulWidget {
 
 class _HeroSectionState extends State<HeroSection>
     with SingleTickerProviderStateMixin {
-  late AnimationController _gridController;
+  late VideoPlayerController _videoController;
+  late AnimationController _textGlowController;
+  late bool _isInitialized;
 
   @override
   void initState() {
     super.initState();
-    _gridController = AnimationController(
+    _isInitialized = false;
+
+    // Glow animation for the title text
+    _textGlowController = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 15),
-    )..repeat();
+      duration: const Duration(seconds: 2),
+    )..repeat(reverse: true);
+
+    // Initialize video player
+    _videoController =
+        VideoPlayerController.asset(
+            'assets/mp4/Radar_spots_agent_in_vietnam_delpmaspu_remove_water_mark.mp4',
+          )
+          ..initialize().then((_) {
+            if (!mounted) return;
+            _isInitialized = true;
+            _videoController.setVolume(0); // Mute video
+            _videoController.setLooping(true);
+            _videoController.play();
+            setState(() {}); // Trigger rebuild to show video
+          });
   }
 
   @override
   void dispose() {
-    _gridController.dispose();
+    _videoController.dispose();
+    _textGlowController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    bool isMobile = MediaQuery.of(context).size.width < 768;
+    final screenWidth = MediaQuery.of(context).size.width;
+    final isMobile = screenWidth < 768;
 
-    return Padding(
-      padding: EdgeInsets.symmetric(
-        vertical: isMobile ? 64.h : 96.h,
-        horizontal: 16.w,
-      ),
+    return Container(
+      width: double.infinity,
+      // Adjust height to better fit the contained image without excessive letterboxing
+      height: isMobile ? 300.h : 700.h,
+      color: Colors.black, // Add strict black background for letterboxing
       child: Stack(
         alignment: Alignment.center,
         children: [
-          // Corner accents (TopLeft, BottomRight) hidden on mobile
-          if (!isMobile)
-            Positioned(
-              top: -20.h,
-              left: 20.w,
-              child: Container(
-                width: 96.w,
-                height: 96.h,
-                decoration: BoxDecoration(
-                  border: Border(
-                    top: BorderSide(
-                      color: Theme.of(context).brightness == Brightness.dark
-                          ? AppColors.dmBorder
-                          : Colors.black12,
+          // ── Background: Animated radar video ──
+          Positioned.fill(
+            child: _isInitialized
+                ? FittedBox(
+                    fit: BoxFit
+                        .contain, // Fit to width/height to show everything
+                    child: SizedBox(
+                      width: _videoController.value.size.width,
+                      height: _videoController.value.size.height,
+                      child: VideoPlayer(_videoController),
                     ),
-                    left: BorderSide(
-                      color: Theme.of(context).brightness == Brightness.dark
-                          ? AppColors.dmBorder
-                          : Colors.black12,
-                    ),
-                  ),
-                ),
-                child: Align(
-                  alignment: Alignment.topLeft,
-                  child: Container(
-                    width: 8.w,
-                    height: 8.h,
-                    color: AppColors.primary,
-                  ),
+                  )
+                : const SizedBox(),
+          ),
+
+          // ── Dark overlay for readability ──
+          Positioned.fill(
+            child: Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    Colors.black.withValues(alpha: 0.2),
+                    Colors.black.withValues(alpha: 0.4),
+                    Colors.black.withValues(alpha: 0.2),
+                  ],
                 ),
               ),
             ),
+          ),
 
-          Flex(
-            direction: isMobile ? Axis.vertical : Axis.horizontal,
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            verticalDirection: VerticalDirection.up,
-            children: [
-              // Hero Text Block
-              Expanded(
-                flex: isMobile ? 0 : 1,
-                child: Column(
-                  crossAxisAlignment: isMobile
-                      ? CrossAxisAlignment.center
-                      : CrossAxisAlignment.end,
-                  children: [
-                    Text(
-                      '${AppStrings.heroTitle1.tr()}\n${AppStrings.heroTitle2.tr()}',
-                      textAlign: isMobile ? TextAlign.center : TextAlign.right,
-                      style: AppTextStyle.getDisplayLarge().copyWith(
-                        fontSize: isMobile ? 60.sp : 120.sp,
-                        height: 0.9,
-                        letterSpacing: -2,
-                      ),
-                    ),
-                    SizedBox(height: 16.h),
-                    Column(
-                      crossAxisAlignment: isMobile
-                          ? CrossAxisAlignment.center
-                          : CrossAxisAlignment.end,
-                      children: [
-                        Container(
-                          width: 128.w,
-                          height: 4.h,
-                          color: AppColors.primary,
-                        ),
-                        SizedBox(height: 8.h),
-                        Text(
-                          '${AppStrings.heroStatusLabel.tr()}: ${AppStrings.heroStatusValue.tr()}\n${AppStrings.heroAgentLabel.tr()}: ${AppStrings.heroAgentName.tr()}',
-                          textAlign: isMobile
-                              ? TextAlign.center
-                              : TextAlign.right,
-                          style: AppTextStyle.getMonospace(
-                            fontSize: 14,
-                            letterSpacing: 2,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
+          // ── Scan-line effect overlay ──
+          Positioned.fill(
+            child: IgnorePointer(
+              child: CustomPaint(painter: _ScanLinePainter()),
+            ),
+          ),
+
+          // ── Campaign title text ──
+          Positioned(
+            right: isMobile ? 135.w : 305.w,
+            bottom: isMobile ? 0.h : 0.h,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                // Top decorative line
+                Container(
+                  width: isMobile ? 32.w : 64.w,
+                  height: 2.h,
+                  color: AppColors.primary,
                 ),
-              ),
+                SizedBox(height: isMobile ? 12.h : 24.h),
 
-              SizedBox(height: 64.h, width: 48.w),
-
-              // Image Radar Spin Section
-              SizedBox(
-                width: isMobile ? 256.w : 320.w,
-                height: isMobile ? 256.h : 320.h,
-                child: Stack(
-                  clipBehavior: Clip.none,
-                  alignment: Alignment.center,
-                  children: [
-                    // Outer spinning dash ring
-                    AnimatedBuilder(
-                      animation: _gridController,
-                      builder: (context, child) {
-                        return Transform.rotate(
-                          angle: _gridController.value * 2 * pi,
-                          child: Container(
-                            width: (isMobile ? 256.w : 320.w) + 40.w,
-                            height: (isMobile ? 256.h : 320.h) + 40.h,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              border: Border.all(
-                                color: AppColors.primary.withValues(alpha: 0.2),
-                                style: BorderStyle.none,
-                                width: 2.w,
-                              ),
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-
-                    // Rotating square Frame
-                    AnimatedBuilder(
-                      animation: _gridController,
-                      builder: (context, child) {
-                        return Transform.rotate(
-                          angle: 45 * pi / 180 + (_gridController.value * 0.1),
-                          child: Container(
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                color: AppColors.primary.withValues(alpha: 0.2),
-                                width: 1.w,
-                              ),
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-
-                    // Main Image Container
-                    Transform.rotate(
-                      angle: 45 * pi / 180,
-                      child: Container(
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: AppColors.primary,
-                            width: 2.w,
-                          ),
-                          boxShadow: [
-                            BoxShadow(
-                              color: AppColors.primary.withValues(alpha: 0.3),
-                              blurRadius: 15.r,
-                            ),
-                          ],
-                          color: Colors.grey[300],
-                          image: const DecorationImage(
-                            image: NetworkImage(
-                              'https://lh3.googleusercontent.com/aida-public/AB6AXuDt1BmaLSr2Jo0yi3av4p0_DbyxxfxOzsEP_efbI8p9ZcGeS0L_7T9rKCCxsYRqSmgFYbBki4ZD1ibl5Ikit8TMDIU7gZ0NFZzrmPX5o4clkL86feMcOhQPw87BFfzBvQ5OcGOoefN6TQJUD0oYwhtO0dIVK_YK6WXBCqtdYkAaHxesHGtfhffxK2mP5TgDVVmt5w2tTKzhTzVpN96FKWnb7kQeOBFdZpd-txkBlbIrxB4Arbj2O1mO_Pxdei-fr2l5sNZrGs2GQJAK',
-                            ),
-                            fit: BoxFit.cover,
-                          ),
-                        ),
+                // "CHIẾN DỊCH" label
+                AnimatedBuilder(
+                  animation: _textGlowController,
+                  builder: (context, child) {
+                    final glowOpacity = 0.4 + (_textGlowController.value * 0.6);
+                    return Text(
+                      'CHIẾN DỊCH',
+                      textAlign: TextAlign.center,
+                      style: AppTextStyle.getMonospace(
+                        fontSize: isMobile ? 26 : 24,
+                        letterSpacing: isMobile ? 8 : 12,
+                        color: AppColors.primary.withValues(alpha: glowOpacity),
                       ),
-                    ),
-
-                    // ID Overlay Text
-                    Positioned(
-                      right: -30.w,
-                      child: Transform.rotate(
-                        angle: 90 * pi / 180,
-                        child: Text(
-                          'ID: 8492-AX',
-                          style: AppTextStyle.getMonospace(
-                            color: AppColors.primary,
-                            fontSize: 10,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
+                    );
+                  },
                 ),
-              ),
-            ],
+
+                SizedBox(height: 8.h),
+
+                // Main title
+                Text(
+                  'THƯ MỜI\nTHAM DỰ',
+                  textAlign: TextAlign.right,
+                  style: AppTextStyle.getDisplayLarge().copyWith(
+                    fontSize: isMobile ? 64.sp : 64.sp,
+                    height: 1,
+                    letterSpacing: -2,
+                    color: Colors.white,
+                    shadows: [
+                      Shadow(
+                        color: AppColors.primary.withValues(alpha: 0.8),
+                        blurRadius: 20,
+                      ),
+                      Shadow(
+                        color: AppColors.primary.withValues(alpha: 0.4),
+                        blurRadius: 40,
+                      ),
+                    ],
+                  ),
+                ),
+
+                // Bottom decorative line
+                Container(
+                  width: isMobile ? 32.w : 64.w,
+                  height: 2.h,
+                  color: AppColors.primary,
+                ),
+              ],
+            ),
           ),
         ],
       ),
     );
   }
+}
+
+/// Subtle horizontal scan-line overlay for a CRT / tactical feel.
+class _ScanLinePainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()
+      ..color = Colors.black.withValues(alpha: 0.06)
+      ..strokeWidth = 1;
+
+    for (double y = 0; y < size.height; y += 3) {
+      canvas.drawLine(Offset(0, y), Offset(size.width, y), paint);
+    }
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }

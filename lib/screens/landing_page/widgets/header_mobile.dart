@@ -73,7 +73,7 @@ class MobileMenuOverlay extends StatelessWidget {
                     '// NAVIGATION',
                     style: AppTextStyle.getMonospace(
                       color: AppColors.primary.withValues(alpha: 0.5),
-                      fontSize: 10,
+                      fontSize: 28,
                       letterSpacing: 3.0,
                     ),
                   ),
@@ -233,7 +233,7 @@ class _MobileNavItemState extends State<MobileNavItem> {
                 widget.index,
                 style: AppTextStyle.getMonospace(
                   color: AppColors.primary.withValues(alpha: 0.4),
-                  fontSize: 10,
+                  fontSize: 28,
                 ),
               ),
               SizedBox(width: 16.w),
@@ -241,7 +241,7 @@ class _MobileNavItemState extends State<MobileNavItem> {
                 widget.text,
                 style: AppTextStyle.getMonospace(
                   color: _isHovered ? Colors.white : AppColors.primary,
-                  fontSize: 14,
+                  fontSize: 28,
                   fontWeight: FontWeightManager.bold,
                   letterSpacing: 3.0,
                 ),
@@ -326,7 +326,7 @@ class _MobileLanguageToggleState extends ConsumerState<MobileLanguageToggle> {
             fontWeight: isActive
                 ? FontWeightManager.bold
                 : FontWeightManager.regular,
-            fontSize: 13,
+            fontSize: 26,
           ),
         ),
       ),

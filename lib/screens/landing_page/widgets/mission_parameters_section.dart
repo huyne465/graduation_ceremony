@@ -12,11 +12,11 @@ import 'package:graduation_ceremony/theme/app_strings.dart';
 // 4. Mission Parameters
 // ======================================
 class MissionParametersSection extends StatelessWidget {
-  const MissionParametersSection({super.key});
+  final bool isMobile;
+  const MissionParametersSection({super.key, required this.isMobile});
 
   @override
   Widget build(BuildContext context) {
-    bool isMobile = MediaQuery.of(context).size.width < 768;
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 96.h),
       child: Center(
@@ -53,7 +53,7 @@ class MissionParametersSection extends StatelessWidget {
                       AppStrings.missionDecrypting.tr(),
                       style: AppTextStyle.getMonospace(
                         color: AppColors.primary,
-                        fontSize: 10,
+                        fontSize: isMobile ? 28 : 14,
                         letterSpacing: 5,
                       ),
                     ),
@@ -65,11 +65,11 @@ class MissionParametersSection extends StatelessWidget {
               if (isMobile)
                 Column(
                   children: [
-                    _AttireCard(),
+                    _AttireCard(isMobile: isMobile),
                     SizedBox(height: 32.h),
-                    _LocationCard(),
+                    _LocationCard(isMobile: isMobile),
                     SizedBox(height: 32.h),
-                    _TimelineCardTech(),
+                    _TimelineCardTech(isMobile: isMobile),
                   ],
                 )
               else
@@ -77,11 +77,11 @@ class MissionParametersSection extends StatelessWidget {
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      Expanded(child: _AttireCard()),
+                      Expanded(child: _AttireCard(isMobile: isMobile)),
                       SizedBox(width: 32.w),
-                      Expanded(child: _LocationCard()),
+                      Expanded(child: _LocationCard(isMobile: isMobile)),
                       SizedBox(width: 32.w),
-                      Expanded(child: _TimelineCardTech()),
+                      Expanded(child: _TimelineCardTech(isMobile: isMobile)),
                     ],
                   ),
                 ),
@@ -98,12 +98,14 @@ class _BaseTechCard extends StatelessWidget {
   final IconData iconData;
   final String secCode;
   final Widget content;
+  final bool isMobile;
 
   const _BaseTechCard({
     required this.title,
     required this.iconData,
     required this.secCode,
     required this.content,
+    required this.isMobile,
   });
 
   @override
@@ -164,6 +166,7 @@ class _BaseTechCard extends StatelessWidget {
                   title,
                   style: AppTextStyle.getTitleLarge().copyWith(
                     fontWeight: FontWeightManager.bold,
+                    fontSize: isMobile ? 32 : null,
                   ),
                 ),
                 SizedBox(height: 16.h),
@@ -178,7 +181,7 @@ class _BaseTechCard extends StatelessWidget {
                 secCode,
                 style: AppTextStyle.getMonospace(
                   color: Colors.grey,
-                  fontSize: 10,
+                  fontSize: isMobile ? 24 : 10,
                 ),
               ),
             ),
@@ -219,20 +222,24 @@ class _Corner extends StatelessWidget {
 }
 
 class _AttireCard extends StatelessWidget {
+  final bool isMobile;
+  const _AttireCard({required this.isMobile});
+
   @override
   Widget build(BuildContext context) {
     return _BaseTechCard(
+      isMobile: isMobile,
       title: AppStrings.missionAttireTitle.tr(),
       iconData: Icons.style,
       secCode: 'SEC-01',
       content: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _TechListItem(AppStrings.missionAttire1.tr()),
+          _TechListItem(AppStrings.missionAttire1.tr(), isMobile: isMobile),
           SizedBox(height: 12.h),
-          _TechListItem(AppStrings.missionAttire2.tr()),
+          _TechListItem(AppStrings.missionAttire2.tr(), isMobile: isMobile),
           SizedBox(height: 12.h),
-          _TechListItem(AppStrings.missionAttire3.tr()),
+          _TechListItem(AppStrings.missionAttire3.tr(), isMobile: isMobile),
         ],
       ),
     );
@@ -241,21 +248,30 @@ class _AttireCard extends StatelessWidget {
 
 class _TechListItem extends StatelessWidget {
   final String text;
-  const _TechListItem(this.text);
+  final bool isMobile;
+  const _TechListItem(this.text, {required this.isMobile});
 
   @override
   Widget build(BuildContext context) {
     return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Container(width: 4.w, height: 4.h, color: AppColors.primary),
+        Container(
+          margin: EdgeInsets.only(top: 6.h),
+          width: 4.w,
+          height: 4.h,
+          color: AppColors.primary,
+        ),
         SizedBox(width: 8.w),
-        Text(
-          text,
-          style: AppTextStyle.getMonospace(
-            fontSize: 12,
-            color: Theme.of(context).brightness == Brightness.dark
-                ? AppColors.dmTextSecondary
-                : Colors.black54,
+        Expanded(
+          child: Text(
+            text,
+            style: AppTextStyle.getMonospace(
+              fontSize: isMobile ? 28 : 14,
+              color: Theme.of(context).brightness == Brightness.dark
+                  ? AppColors.dmTextSecondary
+                  : Colors.black54,
+            ),
           ),
         ),
       ],
@@ -264,9 +280,13 @@ class _TechListItem extends StatelessWidget {
 }
 
 class _LocationCard extends StatelessWidget {
+  final bool isMobile;
+  const _LocationCard({required this.isMobile});
+
   @override
   Widget build(BuildContext context) {
     return _BaseTechCard(
+      isMobile: isMobile,
       title: AppStrings.missionExtractionTitle.tr(),
       iconData: Icons.pin_drop,
       secCode: 'SEC-02',
@@ -315,7 +335,7 @@ class _LocationCard extends StatelessWidget {
           SizedBox(height: 16.h),
           Text(
             AppStrings.missionExtractionDesc.tr(),
-            style: AppTextStyle.getMonospace(fontSize: 14),
+            style: AppTextStyle.getMonospace(fontSize: isMobile ? 28 : 14),
           ),
         ],
       ),
@@ -324,21 +344,34 @@ class _LocationCard extends StatelessWidget {
 }
 
 class _TimelineCardTech extends StatelessWidget {
+  final bool isMobile;
+  const _TimelineCardTech({required this.isMobile});
+
   @override
   Widget build(BuildContext context) {
     return _BaseTechCard(
+      isMobile: isMobile,
       title: AppStrings.missionTimelineTitle.tr(),
       iconData: Icons.schedule,
       secCode: 'SEC-03',
       content: Column(
         children: [
-          _RowTime(AppStrings.missionTimelineInfiltration.tr(), '17:00'),
+          _RowTime(
+            AppStrings.missionTimelineInfiltration.tr(),
+            '17:00',
+            isMobile: isMobile,
+          ),
           _RowTime(
             AppStrings.missionTimelineCeremony.tr(),
             '18:30',
             isHighlight: true,
+            isMobile: isMobile,
           ),
-          _RowTime(AppStrings.missionTimelineDebrief.tr(), '20:30'),
+          _RowTime(
+            AppStrings.missionTimelineDebrief.tr(),
+            '20:30',
+            isMobile: isMobile,
+          ),
         ],
       ),
     );
@@ -349,8 +382,14 @@ class _RowTime extends StatelessWidget {
   final String label;
   final String time;
   final bool isHighlight;
+  final bool isMobile;
 
-  const _RowTime(this.label, this.time, {this.isHighlight = false});
+  const _RowTime(
+    this.label,
+    this.time, {
+    this.isHighlight = false,
+    required this.isMobile,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -371,7 +410,7 @@ class _RowTime extends StatelessWidget {
           Text(
             label,
             style: AppTextStyle.getMonospace(
-              fontSize: 14,
+              fontSize: isMobile ? 28 : 14,
               color: Theme.of(context).brightness == Brightness.dark
                   ? AppColors.dmTextSecondary
                   : Colors.black54,
@@ -381,7 +420,7 @@ class _RowTime extends StatelessWidget {
             time,
             style: AppTextStyle.getMonospace(
               fontWeight: FontWeightManager.bold,
-              fontSize: 14,
+              fontSize: isMobile ? 28 : 14,
               color: isHighlight
                   ? AppColors.primary
                   : (Theme.of(context).brightness == Brightness.dark

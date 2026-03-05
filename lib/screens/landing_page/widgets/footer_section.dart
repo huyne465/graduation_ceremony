@@ -14,6 +14,7 @@ class FooterSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final isMobile = MediaQuery.of(context).size.width < 768;
 
     return Container(
       color: isDark ? AppColors.dmSurface : Colors.black,
@@ -58,19 +59,20 @@ class FooterSection extends StatelessWidget {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text(
+                          Text(
                             'CLASS OF 2025', // Keeping this hardcoded as it's a specific noun/title
                             style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
                               letterSpacing: 1,
+                              fontSize: isMobile ? 28 : 16,
                             ),
                           ),
                           Text(
                             AppStrings.footerSecured.tr(),
                             style: AppTextStyle.getMonospace(
                               color: Colors.grey,
-                              fontSize: 10,
+                              fontSize: isMobile ? 24 : 10,
                             ),
                           ),
                         ],
@@ -107,7 +109,7 @@ class FooterSection extends StatelessWidget {
                     textAlign: TextAlign.right,
                     style: AppTextStyle.getMonospace(
                       color: Colors.grey,
-                      fontSize: 10,
+                      fontSize: isMobile ? 24 : 10,
                       letterSpacing: 2,
                     ),
                   ),

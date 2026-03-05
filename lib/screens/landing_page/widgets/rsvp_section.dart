@@ -14,6 +14,7 @@ class RsvpSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final isMobile = MediaQuery.of(context).size.width < 768;
 
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 96.h),
@@ -62,7 +63,7 @@ class RsvpSection extends StatelessWidget {
                           AppStrings.rsvpSubtitle.tr(),
                           style: AppTextStyle.getMonospace(
                             color: Colors.grey,
-                            fontSize: 14,
+                            fontSize: isMobile ? 28 : 14,
                             letterSpacing: 2,
                           ),
                         ),
@@ -143,6 +144,7 @@ class RsvpSection extends StatelessWidget {
                                       color: Colors.white,
                                       fontWeight: FontWeightManager.bold,
                                       letterSpacing: 2,
+                                      fontSize: isMobile ? 30 : 16,
                                     ),
                                   ),
                                 ],

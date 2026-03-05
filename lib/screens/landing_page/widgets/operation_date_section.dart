@@ -46,17 +46,28 @@ class OperationDateSection extends StatelessWidget {
                     '[ ${AppStrings.operationDateTitle.tr()} ]',
                     style: AppTextStyle.getMonospace(
                       color: Colors.grey,
-                      fontSize: 12,
+                      fontSize: isMobile ? 28 : 12,
                       letterSpacing: 2,
                     ),
                   ),
-                  Text(
-                    '${AppStrings.operationDateMonthValue.tr()} ${AppStrings.operationDateDayValue.tr()}RD',
-                    style: AppTextStyle.getDisplayMedium().copyWith(
-                      fontSize: 60.sp,
-                      letterSpacing: -1,
+
+                  //string converter to vietnamese time
+                  if (context.locale.toString() == 'vi')
+                    Text(
+                      '${AppStrings.operationDateDayValue.tr()} THÁNG ${AppStrings.operationDateMonthValue.tr()}',
+                      style: AppTextStyle.getDisplayMedium().copyWith(
+                        fontSize: 60.sp,
+                        letterSpacing: -1,
+                      ),
                     ),
-                  ),
+                  if (context.locale.toString() == 'en')
+                    Text(
+                      '${AppStrings.operationDateMonthValue.tr()} ${AppStrings.operationDateDayValue.tr()}RD',
+                      style: AppTextStyle.getDisplayMedium().copyWith(
+                        fontSize: 60.sp,
+                        letterSpacing: -1,
+                      ),
+                    ),
                   Container(
                     margin: EdgeInsets.only(top: 8.h),
                     padding: EdgeInsets.only(left: 8.w),
@@ -68,7 +79,7 @@ class OperationDateSection extends StatelessWidget {
                     child: Text(
                       '1700 HOURS', // Will keep this as hardcoded for now, or you can add to localization if needed
                       style: AppTextStyle.getMonospace(
-                        fontSize: 18,
+                        fontSize: isMobile ? 30 : 18,
                         fontWeight: FontWeightManager.bold,
                       ),
                     ),
@@ -108,7 +119,7 @@ class OperationDateSection extends StatelessWidget {
                           '[ CANDIDATE PROFILE ]',
                           style: AppTextStyle.getMonospace(
                             color: Colors.grey,
-                            fontSize: 12,
+                            fontSize: isMobile ? 28 : 12,
                             letterSpacing: 2,
                           ),
                         ),
@@ -117,7 +128,10 @@ class OperationDateSection extends StatelessWidget {
                     SizedBox(height: 16.h),
                     Text(
                       'Highly trained and ready for deployment into the real world. Specialized in critical thinking and problem-solving. This mission marks the completion of phase one.',
-                      style: AppTextStyle.getBodyLarge().copyWith(height: 1.5),
+                      style: AppTextStyle.getBodyLarge().copyWith(
+                        height: 1.5,
+                        fontSize: isMobile ? 28 : null,
+                      ),
                     ),
                     SizedBox(height: 24.h),
                     Row(

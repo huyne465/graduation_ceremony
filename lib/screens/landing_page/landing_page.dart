@@ -63,6 +63,7 @@ class _LandingPageState extends ConsumerState<LandingPage>
   @override
   Widget build(BuildContext context) {
     final isLoading = ref.watch(isLoadingProvider);
+    final isMobile = MediaQuery.of(context).size.width < 768;
 
     return Scaffold(
       backgroundColor: Theme.of(context).brightness == Brightness.dark
@@ -117,7 +118,7 @@ class _LandingPageState extends ConsumerState<LandingPage>
               child: Opacity(
                 opacity: 0.03,
                 child: Image.network(
-                  'https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExcDdtYnJrcG14YnJrcG14YnJrcG14YnJrcG14YnJrcG14YnJrcG14YnJrcG14/xT9Igk31lY1nZ31zXa/giphy.gif',
+                  'https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3bW43M2RmZnV4OHRieGt6Nmw5ZnZjancxN29vNm5qZWpsejBsNGtqNSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/axnFGXT6MzvgY/giphy.gif',
                   fit: BoxFit.cover,
                 ),
               ),
@@ -142,7 +143,7 @@ class _LandingPageState extends ConsumerState<LandingPage>
                           OperationDateSection(),
                           KeyedSubtree(
                             key: _intelKey,
-                            child: MissionParametersSection(),
+                            child: MissionParametersSection(isMobile: isMobile),
                           ),
                           KeyedSubtree(key: _extractKey, child: RsvpSection()),
                           FooterSection(),
@@ -242,7 +243,7 @@ class _LandingPageState extends ConsumerState<LandingPage>
               'SCANNING SECTOR 7...',
               style: AppTextStyle.getMonospace(
                 color: AppColors.primary,
-                fontSize: 10,
+                fontSize: isMobile ? 28 : 10,
               ),
             ),
           ),
