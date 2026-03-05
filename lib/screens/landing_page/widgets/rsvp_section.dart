@@ -4,6 +4,7 @@ import 'package:graduation_ceremony/theme/app_colors.dart';
 import 'package:graduation_ceremony/theme/app_text_style.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:graduation_ceremony/theme/app_strings.dart';
+import 'rsvp_form_dialog.dart';
 
 // ======================================
 // 5. RSVP Section
@@ -71,7 +72,39 @@ class RsvpSection extends StatelessWidget {
 
                         // Tech Button
                         ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            showGeneralDialog(
+                              context: context,
+                              barrierDismissible: true,
+                              barrierLabel: 'RSVP Form',
+                              barrierColor: Colors.black.withValues(alpha: 0.8),
+                              transitionDuration: const Duration(
+                                milliseconds: 300,
+                              ),
+                              pageBuilder: (context, anim1, anim2) {
+                                return const RsvpFormDialog();
+                              },
+                              transitionBuilder:
+                                  (context, anim1, anim2, child) {
+                                    return FadeTransition(
+                                      opacity: anim1,
+                                      child: ScaleTransition(
+                                        scale:
+                                            Tween<double>(
+                                              begin: 0.95,
+                                              end: 1.0,
+                                            ).animate(
+                                              CurvedAnimation(
+                                                parent: anim1,
+                                                curve: Curves.easeOutCubic,
+                                              ),
+                                            ),
+                                        child: child,
+                                      ),
+                                    );
+                                  },
+                            );
+                          },
                           style: ButtonStyle(
                             backgroundColor:
                                 WidgetStateProperty.resolveWith<Color>((

@@ -3,6 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:video_player/video_player.dart';
 import 'package:graduation_ceremony/theme/app_colors.dart';
 import 'package:graduation_ceremony/theme/app_text_style.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:graduation_ceremony/theme/app_strings.dart';
 
 // ======================================
 // 2. Hero Section
@@ -108,7 +110,7 @@ class _HeroSectionState extends State<HeroSection>
           // ── Campaign title text ──
           Positioned(
             right: isMobile ? 135.w : 305.w,
-            bottom: isMobile ? 0.h : 0.h,
+            bottom: isMobile ? 0.h : 10.h,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.end,
@@ -127,7 +129,7 @@ class _HeroSectionState extends State<HeroSection>
                   builder: (context, child) {
                     final glowOpacity = 0.4 + (_textGlowController.value * 0.6);
                     return Text(
-                      'CHIẾN DỊCH',
+                      AppStrings.heroCampaign.tr(),
                       textAlign: TextAlign.center,
                       style: AppTextStyle.getMonospace(
                         fontSize: isMobile ? 26 : 24,
@@ -142,11 +144,11 @@ class _HeroSectionState extends State<HeroSection>
 
                 // Main title
                 Text(
-                  'THƯ MỜI\nTHAM DỰ',
+                  AppStrings.heroInvitation.tr(),
                   textAlign: TextAlign.right,
                   style: AppTextStyle.getDisplayLarge().copyWith(
                     fontSize: isMobile ? 64.sp : 64.sp,
-                    height: 1,
+                    height: 0.9,
                     letterSpacing: -2,
                     color: Colors.white,
                     shadows: [
@@ -161,7 +163,7 @@ class _HeroSectionState extends State<HeroSection>
                     ],
                   ),
                 ),
-
+                SizedBox(height: 14.h),
                 // Bottom decorative line
                 Container(
                   width: isMobile ? 32.w : 64.w,

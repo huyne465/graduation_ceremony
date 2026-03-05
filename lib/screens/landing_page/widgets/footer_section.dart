@@ -60,7 +60,7 @@ class FooterSection extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'CLASS OF 2025', // Keeping this hardcoded as it's a specific noun/title
+                            'CLASS OF 2026', // Keeping this hardcoded as it's a specific noun/title
                             style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,

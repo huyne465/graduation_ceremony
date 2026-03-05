@@ -16,6 +16,8 @@ class AppStrings {
   static const String heroAgentName = 'hero.agent_name';
   static const String heroStatusLabel = 'hero.status_label';
   static const String heroStatusValue = 'hero.status_value';
+  static const String heroCampaign = 'hero.campaign';
+  static const String heroInvitation = 'hero.invitation';
 
   // Operation Date
   static const String operationDateTitle = 'operation_date.title';
@@ -26,6 +28,11 @@ class AppStrings {
   static const String operationDateDayValue = 'operation_date.day_value';
   static const String operationDateYearLabel = 'operation_date.year_label';
   static const String operationDateYearValue = 'operation_date.year_value';
+  static const String operationDateCaptainBriefing =
+      'operation_date.captain_briefing';
+  static const String operationDateMessage1 = 'operation_date.message_1';
+  static const String operationDateMessage2 = 'operation_date.message_2';
+  static const String operationDateMessage3 = 'operation_date.message_3';
 
   // Mission Parameters
   static const String missionTitle = 'mission_parameters.title';
@@ -51,6 +58,11 @@ class AppStrings {
   static const String rsvpTitle = 'rsvp.title';
   static const String rsvpSubtitle = 'rsvp.subtitle';
   static const String rsvpButton = 'rsvp.button';
+  static const String rsvpFormTitle = 'rsvp.form_title';
+  static const String rsvpFormName = 'rsvp.form_name';
+  static const String rsvpFormPhone = 'rsvp.form_phone';
+  static const String rsvpFormEmail = 'rsvp.form_email';
+  static const String rsvpFormSubmit = 'rsvp.form_submit';
 
   // Footer
   static const String footerSystemActive = 'footer.system_active';

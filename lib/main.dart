@@ -26,9 +26,10 @@ void main() async {
   // CustomBinding();
   runApp(
     EasyLocalization(
-      supportedLocales: const [Locale('en'), Locale('vi')],
+      supportedLocales: const [Locale('vi'), Locale('en')],
       path: 'assets/translations', // fallbackFile is not mandatory
-      fallbackLocale: const Locale('en'),
+      fallbackLocale: const Locale('vi'),
+      startLocale: const Locale('vi'),
       child: const ProviderScope(child: GraduationApp()),
     ),
   );

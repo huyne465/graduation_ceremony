@@ -13,7 +13,9 @@
     "agent_label": "ĐẶC VỤ",
     "agent_name": "JOHN DOE",
     "status_label": "MỨC ĐỘ",
-    "status_value": "CHẤP THUẬN CẤP 7"
+    "status_value": "CHẤP THUẬN CẤP 7",
+    "campaign": "CHIẾN DỊCH",
+    "invitation": "THƯ MỜI\nTHAM DỰ"
   },
   "operation_date": {
     "title": "NGÀY THỰC THI",
@@ -23,7 +25,11 @@
     "day_label": "NGÀY",
     "day_value": "6",
     "year_label": "NĂM",
-    "year_value": "2026"
+    "year_value": "2026",
+    "captain_briefing": "LỜI NHẮN TỪ THUYỀN TRƯỞNG",
+    "message_1": "Đôi lời đầu tiên thì mình muốn mời bạn đến với lễ tốt nghiệp của mình, nếu không bận hy vọng bạn có thể giành chút thời gian quý báu của mình đến kỉ niệm cùng một tấm hình cùng với mình được không, những người tớ gửi thư mời là những người đẹp trai xinh gái nhất thế giới mà tớ từng được gặp trên đời đó !!",
+    "message_2": "Mình thực sự rất vui khi thấy các bạn có mặt trong ngày trọng đại này. Sự hiện diện của mọi người không chỉ làm cho buổi lễ thêm phần ý nghĩa mà còn là nguồn động viên vô cùng lớn lao đối với mình. Cảm ơn các bạn đã luôn đồng hành, chia sẻ những vui buồn suốt quãng đời sinh viên và đã dành thời gian quý báu để cùng mình lưu giữ khoảnh khắc tốt nghiệp đáng nhớ này.",
+    "message_3": "Trong giây phút cầm tấm bằng tốt nghiệp trên tay, người đầu tiên mình nghĩ đến chính là những người anh em đã cùng mình đồng hành. Cảm ơn bạn đã không chỉ dành thời gian đến buổi lễ hôm nay, mà còn là người đã kiên nhẫn đồng hành cùng mình qua những mùa deadline căng thẳng và những lúc mình mệt mỏi nhất. Sự hiện diện của bạn chính là món quà ý nghĩa nhất, giúp ngày tốt nghiệp của mình trở nên trọn vẹn và hạnh phúc hơn bao giờ hết."
   },
   "mission_parameters": {
     "title": "THÔNG SỐ NHIỆM VỤ",
@@ -42,7 +48,12 @@
   "rsvp": {
     "title": "XÁC NHẬN THAM DỰ",
     "subtitle": "YÊU CẦU PHẢN HỒI. SẮP HẾT HẠN.",
-    "button": "XÁC NHẬN"
+    "button": "XÁC NHẬN",
+    "form_title": "// TẢI LÊN DỮ LIỆU RSVP",
+    "form_name": "HỌ TÊN",
+    "form_phone": "SỐ ĐIỆN THOẠI",
+    "form_email": "EMAIL",
+    "form_submit": "XÁC NHẬN / INIT_SEQUENCE"
   },
   "footer": {
     "system_active": "HỆ THỐNG HOẠT ĐỘNG",

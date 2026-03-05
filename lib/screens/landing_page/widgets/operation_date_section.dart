@@ -6,12 +6,33 @@ import 'package:graduation_ceremony/theme/app_colors.dart';
 import 'package:graduation_ceremony/theme/app_text_style.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:graduation_ceremony/theme/app_strings.dart';
+import 'package:dots_indicator/dots_indicator.dart';
 
 // ======================================
 // 3. Operation Section
 // ======================================
-class OperationDateSection extends StatelessWidget {
+class OperationDateSection extends StatefulWidget {
   const OperationDateSection({super.key});
+
+  @override
+  State<OperationDateSection> createState() => _OperationDateSectionState();
+}
+
+class _OperationDateSectionState extends State<OperationDateSection> {
+  final PageController _pageController = PageController();
+  int _currentIndex = 0;
+
+  List<String> get _messages => [
+    AppStrings.operationDateMessage1.tr(),
+    AppStrings.operationDateMessage2.tr(),
+    AppStrings.operationDateMessage3.tr(),
+  ];
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -116,7 +137,7 @@ class OperationDateSection extends StatelessWidget {
                         ),
                         SizedBox(width: 8.w),
                         Text(
-                          '[ CANDIDATE PROFILE ]',
+                          '[ ${AppStrings.operationDateCaptainBriefing.tr()} ]',
                           style: AppTextStyle.getMonospace(
                             color: Colors.grey,
                             fontSize: isMobile ? 28 : 12,
@@ -126,26 +147,51 @@ class OperationDateSection extends StatelessWidget {
                       ],
                     ),
                     SizedBox(height: 16.h),
-                    Text(
-                      'Highly trained and ready for deployment into the real world. Specialized in critical thinking and problem-solving. This mission marks the completion of phase one.',
-                      style: AppTextStyle.getBodyLarge().copyWith(
-                        height: 1.5,
-                        fontSize: isMobile ? 28 : null,
+                    SizedBox(
+                      height: isMobile ? 350.h : 200.h,
+                      child: PageView.builder(
+                        controller: _pageController,
+                        onPageChanged: (index) {
+                          setState(() {
+                            _currentIndex = index;
+                          });
+                        },
+                        itemCount: _messages.length,
+                        itemBuilder: (context, index) {
+                          return SingleChildScrollView(
+                            child: Text(
+                              '"${_messages[index]}"',
+                              style: AppTextStyle.getBodyLarge().copyWith(
+                                height: 1.5,
+                                fontSize: isMobile ? 16 : 12,
+                              ),
+                            ),
+                          );
+                        },
                       ),
                     ),
                     SizedBox(height: 24.h),
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.circle,
-                          size: 8.sp,
-                          color: AppColors.primary,
+                    Center(
+                      child: DotsIndicator(
+                        dotsCount: _messages.length,
+                        position: _currentIndex.toDouble(),
+                        onTap: (position) {
+                          _pageController.animateToPage(
+                            position.toInt(),
+                            duration: const Duration(milliseconds: 300),
+                            curve: Curves.easeInOut,
+                          );
+                        },
+                        decorator: DotsDecorator(
+                          color: Colors.grey,
+                          activeColor: AppColors.primary,
+                          size: const Size.square(8.0),
+                          activeSize: const Size(20.0, 8.0),
+                          activeShape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(5.0),
+                          ),
                         ),
-                        SizedBox(width: 8.w),
-                        Icon(Icons.circle, size: 8.sp, color: Colors.grey),
-                        SizedBox(width: 8.w),
-                        Icon(Icons.circle, size: 8.sp, color: Colors.grey),
-                      ],
+                      ),
                     ),
                   ],
                 ),

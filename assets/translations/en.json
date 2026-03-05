@@ -13,7 +13,9 @@
     "agent_label": "AGENT",
     "agent_name": "JOHN DOE",
     "status_label": "CLEARANCE",
-    "status_value": "LEVEL 7 APPROVED"
+    "status_value": "LEVEL 7 APPROVED",
+    "campaign": "CAMPAIGN",
+    "invitation": "INVITATION\nTO ATTEND"
   },
   "operation_date": {
     "title": "OPERATION DATE",
@@ -23,7 +25,11 @@
     "day_label": "DAY",
     "day_value": "6",
     "year_label": "YEAR",
-    "year_value": "2026"
+    "year_value": "2026",
+    "captain_briefing": "CAPTAIN BRIEFING",
+    "message_1": "First of all, I want to invite you to my graduation ceremony. If you are not busy, I hope you can spare your precious time to celebrate and take a picture with me. The people I send this invitation to are the most handsome and beautiful people in the world that I have ever met!!",
+    "message_2": "I am really happy to see you here on this important day. Everyone's presence not only makes the ceremony more meaningful but is also a great source of encouragement for me. Thank you for always accompanying me, sharing the joys and sorrows throughout my student life, and taking the time to save this memorable graduation moment with me.",
+    "message_3": "The moment I hold my graduation degree, the first people I think of are the brothers/sisters who have accompanied me. Thank you not only for taking the time to attend today's ceremony, but also for patiently accompanying me through stressful deadline seasons and my most tiring times. Your presence is the most meaningful gift, making my graduation day more complete and happier than ever."
   },
   "mission_parameters": {
     "title": "MISSION PARAMETERS",
@@ -42,7 +48,12 @@
   "rsvp": {
     "title": "CONFIRM ATTENDANCE",
     "subtitle": "RESPONSE REQUIRED. DEADLINE IMMINENT.",
-    "button": "INITIATE RSVP"
+    "button": "INITIATE RSVP",
+    "form_title": "// RSVP DATA UPLOAD",
+    "form_name": "FULL NAME",
+    "form_phone": "PHONE NUMBER",
+    "form_email": "EMAIL",
+    "form_submit": "CONFIRM / INIT_SEQUENCE"
   },
   "footer": {
     "system_active": "SYSTEM ACTIVE",
